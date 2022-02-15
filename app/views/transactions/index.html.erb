@@ -1,3 +1,5 @@
+
+
 <h1>KelloggCoin Ledger</h1>
 
 <!-- Step 1: List all transaction, starting with the ICO -->
@@ -17,6 +19,7 @@ bens_balance = 0
 brians_balance = 0
 evans_balance = 0
 anthonys_balance = 0
+krystinas_balance = 0
 
 <% 
 # loop through the "blockchain" and increment/decrement the balances accordingly
@@ -30,8 +33,9 @@ for transaction in blockchain
     brians_balance = brians_balance - transaction[:amount]
   elsif transaction[:from_user] == "evan"
     evans_balance = evans_balance - transaction[:amount]
-  elsif transaction[:from_user] == "nathan"
+  elsif transaction[:from_user] == "anthony"
     anthonys_balance = anthonys_balance - transaction[:amount]
+  elsif transaction[:from_user] == "krystina"
   end
 
   # if the user is the "to_user", increment their balance
@@ -43,6 +47,10 @@ for transaction in blockchain
     evans_balance = evans_balance + transaction[:amount]
   elsif transaction[:to_user] == "anthony"
     anthonys_balance = anthonys_balance + transaction[:amount]
+  elsif transaction[:to_user] == "krystina"
+    anthonys_balance = anthonys_balance + transaction[:amount]
   end
-end 
+end
 %>
+
+

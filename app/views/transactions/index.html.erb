@@ -15,55 +15,28 @@ Balance for Anthony: 1456 KC
 Balance for Krystina: 3516 KC 
 -->
 
-brian_user = 0
-ben_user = 0
-evan_user = 0
-anthonys_balance = 0
-krystinas_balance = 0
+
+<ul>
+  <% for transaction in Transaction.all %>
+    <li>
+      <% if transaction.from_user %>
+        <%= transaction.amount %> from <%= transaction.from_user.name %> to <%= transaction.to_user.name %>
+      <% else %>
+        Initial coin offering: <%= transaction.amount %> to <%= transaction.to_user.name %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
 
 
-<%
-=begin%>
- #loop through the "blockchain" and increment/decrement the balances accordingly 
-<%
-=end%>
-
-<% 
-
-   blockchain = Transaction.all.count
-
-  for transaction in blockchain
-  # each "transaction" in the "blockchain" array is a Hash
-
-  blockchain = []
-  # if the user is the "from_user", decrement their balance
-  if transaction[:from_user] == "ben" 
-    brian_user = ben_user - transaction[:amount] 
-  elsif transaction[:from_user] == "brian"
-    ben_user = brian_user - transaction[:amount] 
-  elsif transaction[:from_user] == "evan"
-    evan_user = evan_user - transaction[:amount]
-  elsif transaction[:from_user] == "anthony"
-    anthony_user = anthony_user - transaction[:amount]
-  elsif transaction[:from_user] == "krystina"
-    krystina_user = krystina_user - transaction[:amount]
-  end %>
-
-
-  # if the user is the "to_user", increment their balance
-  <% if transaction[:to_user] == "ben"
-    ben_user = ben_user + transaction[:amount]
-  elsif transaction[:to_user] == "brian"
-    brian_user = brian_user + transaction[:amount]
-  elsif transaction[:to_user] == "evan"
-    evan_user = evan_user + transaction[:amount]
-  elsif transaction[:to_user] == "anthony"
-    anthony_user = anthony_user + transaction[:amount]
-  elsif transaction[:to_user] == "krystina"
-    krystina_user = krystina_user + transaction[:amount]
-  end 
-end 
-
-%>
-
+<ul>
+  <% for user in User.all %>
+    <% 
+      balance = 0
+      balance = balance + Transaction.where({ to_user_id: user.id }).sum(:amount)
+      balance = balance - Transaction.where({ from_user_id: user.id }).sum(:amount)
+    %>
+    <li>Balance for <%= user.name %>: <%= balance %> KC</li>
+  <% end %>
+</ul>
 

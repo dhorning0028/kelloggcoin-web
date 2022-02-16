@@ -15,42 +15,55 @@ Balance for Anthony: 1456 KC
 Balance for Krystina: 3516 KC 
 -->
 
-bens_balance = 0
-brians_balance = 0
-evans_balance = 0
+brian_user = 0
+ben_user = 0
+evan_user = 0
 anthonys_balance = 0
 krystinas_balance = 0
 
+
+<%
+=begin%>
+ #loop through the "blockchain" and increment/decrement the balances accordingly 
+<%
+=end%>
+
 <% 
-# loop through the "blockchain" and increment/decrement the balances accordingly
-for transaction in blockchain
+
+   blockchain = Transaction.all.count
+
+  for transaction in blockchain
   # each "transaction" in the "blockchain" array is a Hash
 
+  blockchain = []
   # if the user is the "from_user", decrement their balance
-  if transaction[:from_user] == "ben"
-    bens_balance = bens_balance - transaction[:amount]
+  if transaction[:from_user] == "ben" 
+    brian_user = ben_user - transaction[:amount] 
   elsif transaction[:from_user] == "brian"
-    brians_balance = brians_balance - transaction[:amount]
+    ben_user = brian_user - transaction[:amount] 
   elsif transaction[:from_user] == "evan"
-    evans_balance = evans_balance - transaction[:amount]
+    evan_user = evan_user - transaction[:amount]
   elsif transaction[:from_user] == "anthony"
-    anthonys_balance = anthonys_balance - transaction[:amount]
+    anthony_user = anthony_user - transaction[:amount]
   elsif transaction[:from_user] == "krystina"
-  end
+    krystina_user = krystina_user - transaction[:amount]
+  end %>
+
 
   # if the user is the "to_user", increment their balance
-  if transaction[:to_user] == "ben"
-    bens_balance = bens_balance + transaction[:amount]
+  <% if transaction[:to_user] == "ben"
+    ben_user = ben_user + transaction[:amount]
   elsif transaction[:to_user] == "brian"
-    brians_balance = brians_balance + transaction[:amount]
+    brian_user = brian_user + transaction[:amount]
   elsif transaction[:to_user] == "evan"
-    evans_balance = evans_balance + transaction[:amount]
+    evan_user = evan_user + transaction[:amount]
   elsif transaction[:to_user] == "anthony"
-    anthonys_balance = anthonys_balance + transaction[:amount]
+    anthony_user = anthony_user + transaction[:amount]
   elsif transaction[:to_user] == "krystina"
-    anthonys_balance = anthonys_balance + transaction[:amount]
-  end
-end
+    krystina_user = krystina_user + transaction[:amount]
+  end 
+end 
+
 %>
 
 
